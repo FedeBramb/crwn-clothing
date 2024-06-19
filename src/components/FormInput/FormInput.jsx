@@ -8,7 +8,6 @@ const FormInput = ({ label, ...inputProps  }) => {
   return (
     <div className='group'>
         <input className='form-input' { ...inputProps }  />
-        {console.log('Current value:', inputProps.value)}
         {label && (
           <label className={`${inputProps.value.length ? 'shrink' : ''} form-input-label`}>
             {label}

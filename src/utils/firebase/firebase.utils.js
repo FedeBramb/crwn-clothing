@@ -3,7 +3,7 @@
 // provider di Google, metodo per user e mail senza provider.
 
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 // 1.Istanzia FireStore 2.riceve il doc nel DB 3.ottiene i dati 4.modifica i dati
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
@@ -70,3 +70,18 @@ export const createAuthWithEmailAndPassword = async (email, password) => {
 
   return await createUserWithEmailAndPassword(auth, email, password);
 };
+
+export const createAuthSignInWithEmailAndPassword = async ( email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    // Utente autenticato
+    // Puoi qui eseguire altre operazioni con l'utente autenticato
+    console.log('Utente autenticato:', user);
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // Gestisci l'errore di autenticazione
+    console.error('Errore di autenticazione:', errorMessage);
+  }
+}

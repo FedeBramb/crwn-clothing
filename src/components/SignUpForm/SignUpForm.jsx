@@ -52,6 +52,7 @@ const SignUpForm = () => {
     // Spread operator così da aggiungere la rispettiva proprietà e valore a formField
     const handleChange = (event) => {
         const { name, value } = event.target;
+        // [name] perchè la prorietà è una stringa.
         setFormFields({...formFields, [name]: value});
     }
 
