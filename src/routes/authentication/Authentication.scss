@@ -1,6 +1,6 @@
-.sign-in-page-div {
+.authentication-div {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 30px;
+    width: 990px;
+    justify-content: space-between;
+    margin: 30px auto
 }

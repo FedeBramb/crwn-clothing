@@ -11,7 +11,7 @@ import './Authentication.scss';
 const Authentication = () => {
     
   return (
-    <div className='sign-in-page-div'>
+    <div className='authentication-div'>
         { /*<button onClick={logGoogleUser}>Sign in with Google Popup</button>*/ }
         <SignInForm />
         <SignUpForm />

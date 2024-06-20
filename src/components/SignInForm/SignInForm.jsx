@@ -29,10 +29,15 @@ const SignInForm = () => {
             // Puoi qui eseguire altre operazioni con l'utente autenticato
             console.log('Utente autenticato:', user);
           } catch (error) {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // Gestisci l'errore di autenticazione
-            console.error('Errore di autenticazione:', errorMessage);
+            switch(error.code) {
+                case 'auth/wrong-password':
+                    alert('Password non corretta');
+                    break;
+                case 'auth/user-not-found':
+                    alert('no user associated with this email');
+                    break;
+            }
+            console.log(error);
           }
     }
 
@@ -56,19 +61,21 @@ const SignInForm = () => {
                 label='Email'
                 type='email' 
                 name='email' 
-                value={email} 
+                value={email}
+                required
                 onChange={handleChange}
             />
             <FormInput 
                 label='Password'
                 type='password' 
                 name='password' 
-                value={password} 
+                value={password}
+                required
                 onChange={handleChange}
             />
             <div className='buttons-container'>
                 <Button buttonType='inverted' type='submit'>Log In</Button>
-                <Button buttonType='google' onClick={signInWithGoogle}>Sign in with Google</Button>
+                <Button buttonType='google' type='button' onClick={signInWithGoogle}>Google Sign In</Button>
             </div>
         </form>
     </div>
@@ -76,9 +83,3 @@ const SignInForm = () => {
 }
 
 export default SignInForm;
-
-/* <label className='input-label-em'>eMail</label>
-            <input className='input-email' type='email' name='email' value={email} onChange={handleChange} />
-            <label className='input-label-psw'>Password</label>
-            <input className='input-password' type='password' name='password' value={password} onChange={handleChange} />
- */
