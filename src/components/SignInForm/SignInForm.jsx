@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
 import FormInput from '../FormInput/FormInput';
+import Button from '../Button/Button';
 
-import { signInWithGooglePopup, signInWithGoogleRedirect, createUserDocumentFromAuth, createAuthSignInWithEmailAndPassword } from '../../utils/firebase/firebase.utils'
+import { signInWithGooglePopup, signInWithGoogleRedirect, createUserDocumentFromAuth, signInAuthWithEmailAndPassword } from '../../utils/firebase/firebase.utils'
 
 import './SignInForm.scss';
 
@@ -22,11 +23,17 @@ const SignInForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await createAuthSignInWithEmailAndPassword(email, password);
-            
-        } catch(error) {
-            console.log("impossibile", error)
-        }
+            const userCredential = await signInAuthWithEmailAndPassword(email, password);
+            const user = userCredential.user;
+            // Utente autenticato
+            // Puoi qui eseguire altre operazioni con l'utente autenticato
+            console.log('Utente autenticato:', user);
+          } catch (error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // Gestisci l'errore di autenticazione
+            console.error('Errore di autenticazione:', errorMessage);
+          }
     }
 
     const handleChange = (event) => {
@@ -34,7 +41,7 @@ const SignInForm = () => {
         setFormFields({...formFields, [name]: value})
     }
     
-    const logGoogleUser = async () => {
+    const signInWithGoogle = async () => {
         const { user } = await signInWithGooglePopup();
         createUserDocumentFromAuth(user);
     }
@@ -46,7 +53,7 @@ const SignInForm = () => {
             <h2>Hai già un account?</h2>
             <span>Accedi con la tua email e password</span>
             <FormInput
-                label='eMail'
+                label='Email'
                 type='email' 
                 name='email' 
                 value={email} 
@@ -59,8 +66,10 @@ const SignInForm = () => {
                 value={password} 
                 onChange={handleChange}
             />
-            <button onClick={logGoogleUser}>Sign in with Google Popup</button>
-            <button type='submit'>Log In</button>
+            <div className='buttons-container'>
+                <Button buttonType='inverted' type='submit'>Log In</Button>
+                <Button buttonType='google' onClick={signInWithGoogle}>Sign in with Google</Button>
+            </div>
         </form>
     </div>
   )

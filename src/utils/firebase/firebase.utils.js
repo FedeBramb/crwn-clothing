@@ -71,17 +71,9 @@ export const createAuthWithEmailAndPassword = async (email, password) => {
   return await createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const createAuthSignInWithEmailAndPassword = async ( email, password) => {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    // Utente autenticato
-    // Puoi qui eseguire altre operazioni con l'utente autenticato
-    console.log('Utente autenticato:', user);
-  } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // Gestisci l'errore di autenticazione
-    console.error('Errore di autenticazione:', errorMessage);
-  }
+export const signInAuthWithEmailAndPassword = async ( email, password) => {
+  if (!email || !password) return;
+
+  return await signInWithEmailAndPassword(auth, email, password);
+
 }

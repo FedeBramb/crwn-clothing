@@ -3,12 +3,12 @@ import React from 'react';
 import SignInForm from '../../components/SignInForm/SignInForm';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 
-import './SignIn.scss';
+import './Authentication.scss';
 
 // Ogni chiamata al DB è asincrona
 // otteniamo user chiamando signInWithGooglePopup
 //  Creaiamo un documento per l'id dell'utente
-const SignIn = () => {
+const Authentication = () => {
     
   return (
     <div className='sign-in-page-div'>
@@ -19,4 +19,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn;
+export default Authentication;
