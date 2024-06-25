@@ -4,17 +4,23 @@
 import { Fragment, useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 
+import CartIcon from '../../components/CartIcon/CartIcon';
+import CartDropdown from '../../components/CartDropdown/CartDropdown';
+
 // Outlet renderizza i componenti figlio, solito utilizzato come in questo caso in un componente
 //  genitore che gestisce le routes.
 import CrwnLogo from '../../assets/crown.svg?react';
+
 import { UserContext } from '../../contexts/user.context';
+import { CartContext } from '../../contexts/cart.context';
 import { signOutUser } from '../../utils/firebase/firebase.utils';
 
 import './Navigation.scss';
 
 const Navigation = () => {
     const  { currentUser } = useContext(UserContext);
-
+    const { isCartOpen } = useContext(CartContext);
+    
   return (
     <Fragment>
         <div className='navigation'>
@@ -32,8 +38,9 @@ const Navigation = () => {
                     SIGN IN
                      </Link>
                 )}
-                
+                <CartIcon />
             </div>
+            {isCartOpen && <CartDropdown />}
         </div>
         <Outlet />
     </Fragment>
