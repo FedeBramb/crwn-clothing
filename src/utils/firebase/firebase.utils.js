@@ -3,7 +3,16 @@
 // provider di Google, metodo per user e mail senza provider.
 
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { 
+  getAuth, 
+  signInWithRedirect, 
+  signInWithPopup, 
+  GoogleAuthProvider, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from 'firebase/auth';
 
 // 1.Istanzia FireStore 2.riceve il doc nel DB 3.ottiene i dati 4.modifica i dati
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
@@ -71,9 +80,18 @@ export const createAuthWithEmailAndPassword = async (email, password) => {
   return await createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const signInAuthWithEmailAndPassword = async ( email, password) => {
+export const signInAuthWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
 
   return await signInWithEmailAndPassword(auth, email, password);
 
 }
+
+// Auth tiene traccia anche se un utente è logatto o meno.
+export const signOutUser = async () => await signOut(auth);
+
+// Esegue callback ogni volta che l'utente logga o slogga
+// Open Listener, passivamente attivo
+export const onAuthStateChangedListener = (callback) => {
+  onAuthStateChanged(auth, callback);
+};

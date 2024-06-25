@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {  useState } from 'react';
 
 import FormInput from '../FormInput/FormInput';
 import Button from '../Button/Button';
@@ -24,18 +24,15 @@ const SignUpForm = () => {
         setFormFields(defaultFormFields);
     }
 
-    /* todo: confermare che le due password siano uguali
-        controllare se effettivamente abbiamo l'autenticazione con email e password dall'user 
-        creare documento dell'utente con i dettagli*/
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (password !== confirmPassword) {
             alert("Passwords not match");
             return;
         }
-        
         try {
             const { user } = await createAuthWithEmailAndPassword( email, password );
+            setCurrentUser(user);
             await createUserDocumentFromAuth(user, { displayName });
             resetFormFields();
         } catch(error) {
@@ -100,4 +97,4 @@ const SignUpForm = () => {
   )
 }
 
-export default SignUpForm
+export default SignUpForm;

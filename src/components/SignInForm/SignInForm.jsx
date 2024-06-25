@@ -3,7 +3,12 @@ import { useState } from 'react';
 import FormInput from '../FormInput/FormInput';
 import Button from '../Button/Button';
 
-import { signInWithGooglePopup, signInWithGoogleRedirect, createUserDocumentFromAuth, signInAuthWithEmailAndPassword } from '../../utils/firebase/firebase.utils'
+import { 
+    signInWithGooglePopup, 
+    signInWithGoogleRedirect, 
+    createUserDocumentFromAuth, 
+    signInAuthWithEmailAndPassword 
+} from '../../utils/firebase/firebase.utils';
 
 import './SignInForm.scss';
 
@@ -12,12 +17,13 @@ const defaultFormFields = {
     password: ''
 }
 
+
 const SignInForm = () => {
     const [ formFields, setFormFields ] = useState(defaultFormFields);
     const { email, password } = formFields;
 
-    const resetFields = () => {
-        useState(defaultFormFields)
+    const resetFormFields = () => {
+        setFormFields(defaultFormFields)
     }
 
     const handleSubmit = async (event) => {
@@ -25,9 +31,7 @@ const SignInForm = () => {
         try {
             const userCredential = await signInAuthWithEmailAndPassword(email, password);
             const user = userCredential.user;
-            // Utente autenticato
-            // Puoi qui eseguire altre operazioni con l'utente autenticato
-            console.log('Utente autenticato:', user);
+            resetFormFields();
           } catch (error) {
             switch(error.code) {
                 case 'auth/wrong-password':
@@ -47,8 +51,7 @@ const SignInForm = () => {
     }
     
     const signInWithGoogle = async () => {
-        const { user } = await signInWithGooglePopup();
-        createUserDocumentFromAuth(user);
+        await signInWithGooglePopup();
     }
 
     
