@@ -26,23 +26,28 @@ const SignUpForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+    
         if (password !== confirmPassword) {
-            alert("Passwords not match");
-            return;
+          alert('passwords do not match');
+          return;
         }
+    
         try {
-            const { user } = await createAuthWithEmailAndPassword( email, password );
-            setCurrentUser(user);
-            await createUserDocumentFromAuth(user, { displayName });
-            resetFormFields();
-        } catch(error) {
-            if (error.code === 'auth/email-already-in-use') {
-                alert('eMail già in uso')
-            }
-            console.log("Errore nel creare documento utente", error);
+          const { user } = await createAuthUserWithEmailAndPassword(
+            email,
+            password
+          );
+    
+          await createUserDocumentFromAuth(user, { displayName });
+          resetFormFields();
+        } catch (error) {
+          if (error.code === 'auth/email-already-in-use') {
+            alert('Cannot create user, email already in use');
+          } else {
+            console.log('user creation encountered an error', error);
+          }
         }
-        
-    }
+    };
 
     // Target permettere di recuperare tutti i dettagli legati all'input
     // Settiamo lo state
@@ -98,3 +103,6 @@ const SignUpForm = () => {
 }
 
 export default SignUpForm;
+
+
+  
