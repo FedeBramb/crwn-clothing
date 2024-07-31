@@ -16,7 +16,7 @@ const getButton = (buttonType= BUTTON_TYPE_CLASSES.base) => (
   }[buttonType]
 );
 
-// children, qualsiasi tag o testo, tipo di bottone ed eventuali altre props
+// Props: children, qualsiasi tag o testo, tipo di bottone ed eventuali altre props
 const Button = ({ children, buttonType, ...otherProps }) => {
   const CustomButton = getButton(buttonType);
   return (
