@@ -36,6 +36,7 @@ const firebaseConfig = {
 
 // Inizializziamo FireBase
 const firebaseapp = initializeApp(firebaseConfig);
+console.log("Firebase app initialized:", firebaseapp);
 
 
 // Crea  una nuovo classe Provider 
@@ -65,6 +66,7 @@ export const addCollectionAndDocuments = async (collectionkey, objectsToAdd) => 
   objectsToAdd.forEach((object) => {
     const docRef = doc(collectionRef, object.title.toLowerCase());
     batch.set(docRef, object); 
+    console.log(`Preparing to add document: ${object.title.toLowerCase()}`, object);
   })
 
   await batch.commit();
@@ -136,5 +138,8 @@ export const signOutUser = async () => await signOut(auth);
 // Esegue callback ogni volta che l'utente logga o slogga
 // Observer
 export const onAuthStateChangedListener = (callback) => {
-  onAuthStateChanged(auth, callback);
+  onAuthStateChanged(auth, (user) => {
+    console.log("User state changed:", user);
+    callback(user);
+  });
 };
